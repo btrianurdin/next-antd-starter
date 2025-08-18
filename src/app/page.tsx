@@ -13,7 +13,7 @@ export default function Home() {
   }, [sds]);
 
   return (
-    <div>
+    <div className="w-2/3 bg-amber-100 p-4 pt-2 text-red-300">
       <RangePicker />
       <Button variant="solid" color="primary">
         Tes aja

@@ -8,5 +8,6 @@
   "arrowParens": "avoid",
   "jsxSingleQuote": false,
   "printWidth": 100,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

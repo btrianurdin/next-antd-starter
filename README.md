@@ -15,9 +15,9 @@
 
 This project follows **Clean Architecture** principles with:
 
-- ✅ **Feature-based folder structure** 
+- ✅ **Feature-based folder structure**
 - ✅ **Strict import boundaries** between features
-- ✅ **DTO pattern** for API data handling  
+- ✅ **DTO pattern** for API data handling
 - ✅ **Enforced naming conventions** (camelCase/PascalCase)
 - ✅ **Public API contracts** via index.ts files
 
@@ -25,19 +25,19 @@ This project follows **Clean Architecture** principles with:
 
 1. [Feature Isolation Rules](#️-feature-isolation-rules)
 2. [Naming Convention Rules](#-naming-convention-rules)
-3. [API Data Handling - DTO Pattern](#-api-data-handling---dto-pattern)
-4. [Feature Import Boundaries](#️-feature-import-boundaries)
-5. [ESLint Configuration](#-eslint-configuration)
-6. [Benefits](#-benefits)
-7. [Best Practices](#-best-practices)
-8. [File Naming Convention](#-file-naming-convention)
-9. [ESLint Rules Summary](#-eslint-rules-summary)
+3. [Feature Import Boundaries](#️-feature-import-boundaries)
+4. [ESLint Configuration](#-eslint-configuration)
+5. [Benefits](#-benefits)
+6. [Best Practices](#-best-practices)
+7. [File Naming Convention](#-file-naming-convention)
+8. [ESLint Rules Summary](#-eslint-rules-summary)
+9. [Tailwind Format](#-tailwind-format)
 
-## Feature Isolation Rules
+## **Feature Isolation Rules**
 
 Proyek ini menggunakan **feature-based architecture** dengan **strict boundaries** untuk menjaga feature tetap independent dan maintainable.
 
-## 📝 Naming Convention Rules
+## 📝 **Naming Convention Rules**
 
 ### ✅ **REQUIRED - camelCase untuk Variables & Functions**
 
@@ -47,7 +47,7 @@ const userName = 'john';
 const isUserActive = true;
 const apiResponse = {};
 
-// ✅ GOOD: PascalCase untuk React Components  
+// ✅ GOOD: PascalCase untuk React Components
 const UserCard = ({ name }: { name: string }) => {
   return <div>{name}</div>;
 };
@@ -60,7 +60,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 const API_BASE_URL = 'https://api.example.com';
 const MAX_RETRY_ATTEMPTS = 3;
 
-// ✅ GOOD: camelCase functions  
+// ✅ GOOD: camelCase functions
 function getUserData(userId: string) {
   return { id: userId };
 }
@@ -88,18 +88,18 @@ File pattern: `**/*dto*.ts`, `**/*DTO*.ts`, `**/dto*.ts`, `**/DTO*.ts`
 ```typescript
 // file: user.dto.ts
 export interface UserDTO {
-  user_id: string;        // ✅ OK: snake_case allowed in DTO
-  first_name: string;     // ✅ OK: snake_case allowed in DTO
-  last_name: string;      // ✅ OK: snake_case allowed in DTO
-  email_address: string;  // ✅ OK: snake_case allowed in DTO
-  created_at: string;     // ✅ OK: snake_case allowed in DTO
-  is_active: boolean;     // ✅ OK: snake_case allowed in DTO
+  user_id: string; // ✅ OK: snake_case allowed in DTO
+  first_name: string; // ✅ OK: snake_case allowed in DTO
+  last_name: string; // ✅ OK: snake_case allowed in DTO
+  email_address: string; // ✅ OK: snake_case allowed in DTO
+  created_at: string; // ✅ OK: snake_case allowed in DTO
+  is_active: boolean; // ✅ OK: snake_case allowed in DTO
 }
 
 export interface PostDTO {
-  post_id: string;        // ✅ OK: snake_case allowed in DTO
-  user_id: string;        // ✅ OK: snake_case allowed in DTO
-  comment_count: number;  // ✅ OK: snake_case allowed in DTO
+  post_id: string; // ✅ OK: snake_case allowed in DTO
+  user_id: string; // ✅ OK: snake_case allowed in DTO
+  comment_count: number; // ✅ OK: snake_case allowed in DTO
 }
 ```
 
@@ -110,18 +110,18 @@ All other files enforce camelCase for properties:
 ```typescript
 // file: types.ts
 export type PostA = {
-  post_id: string;        // ❌ ERROR: must be postId
-  user_id: string;        // ❌ ERROR: must be userId
-  created_at: string;     // ❌ ERROR: must be createdAt
-  comment_count: number;  // ❌ ERROR: must be commentCount
-}
+  post_id: string; // ❌ ERROR: must be postId
+  user_id: string; // ❌ ERROR: must be userId
+  created_at: string; // ❌ ERROR: must be createdAt
+  comment_count: number; // ❌ ERROR: must be commentCount
+};
 
 export type PostB = {
-  postId: string;         // ✅ OK: camelCase
-  userId: string;         // ✅ OK: camelCase
-  createdAt: string;      // ✅ OK: camelCase
-  commentCount: number;   // ✅ OK: camelCase
-}
+  postId: string; // ✅ OK: camelCase
+  userId: string; // ✅ OK: camelCase
+  createdAt: string; // ✅ OK: camelCase
+  commentCount: number; // ✅ OK: camelCase
+};
 ```
 
 #### 🔄 **Best Practice Implementation**
@@ -166,7 +166,7 @@ async function getUser(id: string): Promise<User> {
 
 ```typescript
 // ❌ BAD: snake_case variables (akan trigger ESLint error)
-const user_name = 'john';
+const user_name = "john";
 const is_user_active = true;
 
 // ❌ BAD: snake_case functions
@@ -186,23 +186,23 @@ function processUser(user_data: any) {
 
 ```typescript
 // ✅ GOOD: Import dari public API menggunakan alias
-import { useGetComment } from '@/features/comments';
-import { PostCard } from '@/features/posts';
+import { useGetComment } from "@/features/comments";
+import { PostCard } from "@/features/posts";
 
 // ✅ GOOD: Import dari public API menggunakan relative path
-import { useGetComment } from '../../comments';
+import { useGetComment } from "../../comments";
 ```
 
 ### ❌ **FORBIDDEN - Direct Import dari Feature Internals**
 
 ```typescript
 // ❌ BAD: Direct import dari internal files (akan trigger ESLint error)
-import { useGetComment } from '@/features/comments/hooks/useGetComment';
-import { CommentsList } from '@/features/comments/components/CommentsList';
-import { Comment } from '@/features/comments/types';
+import { useGetComment } from "@/features/comments/hooks/useGetComment";
+import { CommentsList } from "@/features/comments/components/CommentsList";
+import { Comment } from "@/features/comments/types";
 
 // ❌ BAD: Relative direct import
-import { useGetComment } from '../../comments/hooks/useGetComment';
+import { useGetComment } from "../../comments/hooks/useGetComment";
 ```
 
 ### 📁 **Feature Structure**
@@ -220,7 +220,7 @@ src/features/
 │   │   └── CommentsList.tsx
 │   └── types.ts          ← Internal (jangan import langsung)
 └── posts/
-    ├── index.ts          ← 🔥 PUBLIC API 
+    ├── index.ts          ← 🔥 PUBLIC API
     ├── hooks/
     ├── components/
     └── types.ts
@@ -231,9 +231,10 @@ src/features/
 ESLint akan secara otomatis mendeteksi dan memberikan error untuk:
 
 ### Feature Boundaries:
+
 ```javascript
 // ESLint Error Message:
-❌ Direct imports from feature internals are forbidden! 
+❌ Direct imports from feature internals are forbidden!
 Import from the feature's public API instead.
 
 Example:
@@ -242,6 +243,7 @@ Example:
 ```
 
 ### Naming Convention:
+
 ```javascript
 // ESLint Error Messages:
 ❌ Variable name `user_name` must match one of the following formats: camelCase, UPPER_CASE, PascalCase
@@ -251,11 +253,12 @@ Example:
 ```
 
 ### DTO Files:
+
 ```javascript
 // DTO Files (*.dto.ts) - No error for snake_case properties
 ✅ user_id, first_name, created_at // No error in DTO files
 
-// Regular Files - Error for snake_case properties  
+// Regular Files - Error for snake_case properties
 ❌ user_id, first_name, created_at // Error in regular files
 ```
 
@@ -280,21 +283,70 @@ Example:
 
 ## 📋 **File Naming Convention**
 
-| Type | Format | Examples |
-|------|--------|----------|
-| **DTO Files** | `*.dto.ts`, `*DTO.ts` | `user.dto.ts`, `apiDTO.ts` |
-| **Domain Types** | `*.ts` | `types.ts`, `models.ts` |
-| **Components** | `PascalCase` | `UserCard.tsx`, `ThemeProvider.tsx` |
-| **Hooks** | `use*.ts` | `useGetUser.ts`, `useAuth.ts` |
-| **Utils** | `camelCase` | `dateUtils.ts`, `apiHelpers.ts` |
+| Type             | Format                | Examples                            |
+| ---------------- | --------------------- | ----------------------------------- |
+| **DTO Files**    | `*.dto.ts`, `*DTO.ts` | `user.dto.ts`, `apiDTO.ts`          |
+| **Domain Types** | `*.ts`                | `types.ts`, `models.ts`             |
+| **Components**   | `PascalCase`          | `UserCard.tsx`, `ThemeProvider.tsx` |
+| **Hooks**        | `use*.ts`             | `useGetUser.ts`, `useAuth.ts`       |
+| **Utils**        | `camelCase`           | `dateUtils.ts`, `apiHelpers.ts`     |
 
 ## 🎯 **ESLint Rules Summary**
 
-| Rule | Scope | Enforcement |
-|------|-------|-------------|
-| **Variables** | All files | `camelCase`, `UPPER_CASE`, `PascalCase` |
-| **Functions** | All files | `camelCase`, `PascalCase` |
-| **Type Properties** | DTO files | `camelCase`, `PascalCase`, `UPPER_CASE`, `snake_case` |
-| **Type Properties** | Regular files | `camelCase`, `PascalCase`, `UPPER_CASE` |
-| **Cross-feature imports** | Feature folders | Forbidden (use public API) |
-| **Direct feature internals** | All files | Forbidden (use index.ts) |
+| Rule                         | Scope           | Enforcement                                           |
+| ---------------------------- | --------------- | ----------------------------------------------------- |
+| **Variables**                | All files       | `camelCase`, `UPPER_CASE`, `PascalCase`               |
+| **Functions**                | All files       | `camelCase`, `PascalCase`                             |
+| **Type Properties**          | DTO files       | `camelCase`, `PascalCase`, `UPPER_CASE`, `snake_case` |
+| **Type Properties**          | Regular files   | `camelCase`, `PascalCase`, `UPPER_CASE`               |
+| **Cross-feature imports**    | Feature folders | Forbidden (use public API)                            |
+| **Direct feature internals** | All files       | Forbidden (use index.ts)                              |
+
+## **Tailwind Format**
+
+### 1. Prettier Integration (Recommended)
+
+Prettier dengan plugin Tailwind akan otomatis mengurutkan classes:
+
+```bash
+# Check apakah file perlu formatting
+npm run format:check
+
+# Format file yang belum terurut
+npm run format
+```
+
+### 2. Custom Script Check
+
+Script khusus untuk check Tailwind formatting:
+
+```bash
+# Check specific file
+npm run check-tailwind src/components/MyComponent.tsx
+
+# Check dan dapat warning jika belum formatted
+npm run check-tailwind
+```
+
+### 3. VS Code Integration
+
+Untuk mendapatkan warning langsung di VS Code, tambahkan ke `.vscode/settings.json`:
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true
+  },
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true
+}
+```
+
+
+### Dalam Terminal
+
+```bash
+⚠️ TestUnformattedTailwind.tsx - Tailwind classes belum terformat!
+💡 Jalankan: npx prettier --write "file.tsx" untuk fix
+```

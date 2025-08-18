@@ -23,8 +23,17 @@ const eslintConfig = [
     ],
   },
   ...compat.config({
-    extends: ["next/core-web-vitals", "next/typescript", "eslint-config-prettier"],
+    extends: ["next/core-web-vitals", "next/typescript"],
+    plugins: ["prettier"],
     rules: {
+      // Prettier integration - akan warning jika code belum diformat
+      "prettier/prettier": [
+        "warn",
+        {
+          endOfLine: "auto",
+          plugins: ["prettier-plugin-tailwindcss"],
+        },
+      ], // Warning jika format tidak sesuai Prettier (termasuk Tailwind class sorting)
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "off",
@@ -44,50 +53,50 @@ const eslintConfig = [
       "@typescript-eslint/naming-convention": [
         "error",
         {
-          "selector": "variable",
-          "format": ["camelCase", "UPPER_CASE", "PascalCase"],
-          "leadingUnderscore": "allow",
-          "trailingUnderscore": "forbid"
+          selector: "variable",
+          format: ["camelCase", "UPPER_CASE", "PascalCase"],
+          leadingUnderscore: "allow",
+          trailingUnderscore: "forbid",
         },
         {
-          "selector": "function",
-          "format": ["camelCase", "PascalCase"],
-          "leadingUnderscore": "allow"
+          selector: "function",
+          format: ["camelCase", "PascalCase"],
+          leadingUnderscore: "allow",
         },
         {
-          "selector": "parameter",
-          "format": ["camelCase"],
-          "leadingUnderscore": "allow"
+          selector: "parameter",
+          format: ["camelCase"],
+          leadingUnderscore: "allow",
         },
         {
-          "selector": "typeProperty",
-          "format": ["camelCase", "PascalCase", "UPPER_CASE"],
-          "leadingUnderscore": "allow"
+          selector: "typeProperty",
+          format: ["camelCase", "PascalCase", "UPPER_CASE"],
+          leadingUnderscore: "allow",
         },
         {
-          "selector": "property",
-          "format": ["camelCase", "PascalCase", "UPPER_CASE"],
-          "leadingUnderscore": "allow"
+          selector: "property",
+          format: ["camelCase", "PascalCase", "UPPER_CASE"],
+          leadingUnderscore: "allow",
         },
         {
-          "selector": "typeLike",
-          "format": ["PascalCase"]
+          selector: "typeLike",
+          format: ["PascalCase"],
         },
         {
-          "selector": "enumMember",
-          "format": ["UPPER_CASE", "PascalCase"]
-        }
+          selector: "enumMember",
+          format: ["UPPER_CASE", "PascalCase"],
+        },
       ],
       // Additional camelCase enforcement with DTO exception
-      "camelcase": [
+      camelcase: [
         "error",
         {
-          "properties": "always",
-          "ignoreDestructuring": true,
-          "ignoreImports": true,
-          "ignoreGlobals": true,
-          "allow": []
-        }
+          properties: "always",
+          ignoreDestructuring: true,
+          ignoreImports: true,
+          ignoreGlobals: true,
+          allow: [],
+        },
       ],
       // Feature boundary enforcement - prevent direct imports from feature internals
       "no-restricted-imports": [
@@ -102,11 +111,12 @@ const eslintConfig = [
                 "../../*/utils/*",
                 "../../*/types*",
                 "../../*/api/*",
-                "../../*/services/*"
+                "../../*/services/*",
               ],
-              message: "❌ Cross-feature imports are forbidden! Import from the feature's public API (index.ts) instead.\n\nExample:\n✅ import { useGetComment } from '@/features/comments'\n❌ import { useGetComment } from '../../comments/hooks/useGetComment'"
+              message:
+                "❌ Cross-feature imports are forbidden! Import from the feature's public API (index.ts) instead.\n\nExample:\n✅ import { useGetComment } from '@/features/comments'\n❌ import { useGetComment } from '../../comments/hooks/useGetComment'",
             },
-            // Restrict absolute alias cross-feature imports  
+            // Restrict absolute alias cross-feature imports
             {
               group: [
                 "@/features/*/hooks/*",
@@ -114,13 +124,14 @@ const eslintConfig = [
                 "@/features/*/utils/*",
                 "@/features/*/types*",
                 "@/features/*/api/*",
-                "@/features/*/services/*"
+                "@/features/*/services/*",
               ],
-              message: "❌ Direct imports from feature internals are forbidden! Import from the feature's public API instead.\n\nExample:\n✅ import { useGetComment } from '@/features/comments'\n❌ import { useGetComment } from '@/features/comments/hooks/useGetComment'"
-            }
-          ]
-        }
-      ]
+              message:
+                "❌ Direct imports from feature internals are forbidden! Import from the feature's public API instead.\n\nExample:\n✅ import { useGetComment } from '@/features/comments'\n❌ import { useGetComment } from '@/features/comments/hooks/useGetComment'",
+            },
+          ],
+        },
+      ],
     },
   }),
   // Special rules for DTO files - allow snake_case properties
@@ -130,21 +141,21 @@ const eslintConfig = [
       "@typescript-eslint/naming-convention": [
         "error",
         {
-          "selector": "typeProperty",
-          "format": ["camelCase", "PascalCase", "UPPER_CASE", "snake_case"],
-          "leadingUnderscore": "allow"
-        }
+          selector: "typeProperty",
+          format: ["camelCase", "PascalCase", "UPPER_CASE", "snake_case"],
+          leadingUnderscore: "allow",
+        },
       ],
-      "camelcase": [
-        "error", 
+      camelcase: [
+        "error",
         {
-          "properties": "never",
-          "ignoreDestructuring": true,
-          "ignoreImports": true,
-          "ignoreGlobals": true
-        }
-      ]
-    }
+          properties: "never",
+          ignoreDestructuring: true,
+          ignoreImports: true,
+          ignoreGlobals: true,
+        },
+      ],
+    },
   },
 ];
 
