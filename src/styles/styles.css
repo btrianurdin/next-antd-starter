@@ -1,12 +1,88 @@
+@layer theme, base, antd, components, utilities;
+
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --theme-bg: #f9faff;
+  --theme-bg-elevated: #ffffff;
+  --theme-secondary: #e6e6e6;
+  --theme-shadow-base: #f9faff33;
+  --theme-border: #f1f1f1;
+
+  --theme-text-50: #f6f6f6;
+  --theme-text-100: #e7e7e7;
+  --theme-text-200: #d1d1d1;
+  --theme-text-300: #b0b0b0;
+  --theme-text-400: #888888;
+  --theme-text-500: #6d6d6d;
+  --theme-text-600: #5d5d5d;
+  --theme-text-700: #4f4f4f;
+  --theme-text-800: #454545;
+  --theme-text-900: #3c3c3c;
+  --theme-text-950: #262626;
+  --theme-text-primary: #3c3c3c;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --theme-bg: #13161b;
+  --theme-bg-elevated: #15181c;
+  --theme-secondary: #2f2f2f;
+  --theme-shadow-base: #0f0f0f;
+  --theme-border: #303030;
+
+  --theme-text-50: #f6f6f6;
+  --theme-text-100: #e7e7e7;
+  --theme-text-200: #d1d1d1;
+  --theme-text-300: #b0b0b0;
+  --theme-text-400: #888888;
+  --theme-text-500: #6d6d6d;
+  --theme-text-600: #5d5d5d;
+  --theme-text-700: #4f4f4f;
+  --theme-text-800: #454545;
+  --theme-text-900: #3c3c3c;
+  --theme-text-950: #262626;
+  --theme-text-primary: #e3e3e3;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-tx-bg: var(--theme-bg);
+  --color-tx-bg-elevated: var(--theme-bg-elevated);
+  --color-tx-secondary: var(--theme-secondary);
+  --color-tx-primary: var(--theme-color-primary);
+  --color-tx-info: var(--theme-color-info);
+  --color-tx-success: var(--theme-color-success);
+  --color-tx-error: var(--theme-color-error);
+  --color-tx-border: var(--theme-border);
+  --color-tx-text-50: var(--theme-text-50);
+  --color-tx-text-100: var(--theme-text-100);
+  --color-tx-text-200: var(--theme-text-200);
+  --color-tx-text-300: var(--theme-text-300);
+  --color-tx-text-400: var(--theme-text-400);
+  --color-tx-text-500: var(--theme-text-500);
+  --color-tx-text-600: var(--theme-text-600);
+  --color-tx-text-700: var(--theme-text-700);
+  --color-tx-text-800: var(--theme-text-800);
+  --color-tx-text-900: var(--theme-text-900);
+  --color-tx-text-950: var(--theme-text-950);
+  --color-tx-text-primary: var(--theme-text-primary);
+
+  --shadow-tx-base: var(--theme-shadow-base);
+
   --font-poppins: var(--font-poppins);
+}
+
+@layer base {
+  body {
+    @apply bg-tx-bg text-tx-text-primary font-poppins transition-colors duration-300;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
 }
